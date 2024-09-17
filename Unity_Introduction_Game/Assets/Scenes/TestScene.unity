@@ -204,13 +204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699849853}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6379999, z: 0}
+  m_LocalRotation: {x: -0.0014083724, y: 0.9951226, z: 0.014361926, w: 0.097584665}
+  m_LocalPosition: {x: 0.0000000013329055, y: 0.6379999, z: -0.0000000067308297}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1311212518}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.654, y: 168.799, z: 0}
 --- !u!1 &1311212507 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4848129165512306667, guid: 51754ae978853e548ba7403b2412408a, type: 3}
@@ -228,8 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea5a1f9a593ff44aba10ffb6e99f0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprinting: 0
   speed: 10
+  sprintMult: 1.5
   jumpHeight: 5
+  groundDetection: 1.5
+  sprintToggle: 0
   mouseSensitivity: 2
   xSensitivity: 2
   ySensitivity: 2
@@ -342,7 +346,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.3272839, y: 0.53107566, z: -0.16}
-  m_LocalScale: {x: 1.4854164, y: 1, z: 1.7144679}
+  m_LocalScale: {x: 4.25854, y: 1, z: 3.1102161}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -454,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3647094501953027462, guid: 51754ae978853e548ba7403b2412408a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.926
+      value: 1.516
       objectReference: {fileID: 0}
     - target: {fileID: 3647094501953027462, guid: 51754ae978853e548ba7403b2412408a, type: 3}
       propertyPath: m_LocalPosition.z
