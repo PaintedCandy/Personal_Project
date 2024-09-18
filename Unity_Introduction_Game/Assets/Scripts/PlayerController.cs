@@ -9,6 +9,15 @@ public class PlayerController : MonoBehaviour
 
     Vector2 camRotation;
 
+
+    [Header("Player Stats")]
+    public int health = 5;
+    public int maxHealth = 10;
+    public int HealthPickupAmt = 5;
+
+    [Header("Weapon Stats")]
+    public Transform WeaponSlot;
+
     [Header("Movement Stats")]
     public bool sprinting = false;
     public float speed = 10f;
@@ -58,8 +67,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 temp = myRB.velocity;
 
-        temp.x = Input.GetAxisRaw("Horizontal") * speed;
-        temp.z = Input.GetAxisRaw("Vertical") * speed;
+        temp.z = Input.GetAxisRaw("Horizontal") * speed;
+        temp.x = Input.GetAxisRaw("Vertical") * speed;
 
         if (sprinting)
             temp.z *= sprintMult;
@@ -75,5 +84,30 @@ public class PlayerController : MonoBehaviour
 
         myRB.velocity = (transform.forward * temp.x) + (transform.right * temp.z) + (transform.up * temp.y);
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if((collision.gameObject.tag == "HealthPickup") && health < maxHealth)
+        {
+            if (health + HealthPickupAmt > maxHealth)
+                health = maxHealth;
+
+            else
+                health += HealthPickupAmt;
+
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Weapon")
+        {
+            other.transform.position = WeaponSlot.position;
+            other.transform.rotation = WeaponSlot.rotation;
+
+            other.transform.SetParent(WeaponSlot);
+        }
     }
 }
