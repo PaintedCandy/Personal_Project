@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,9 +13,12 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Player Stats")]
+    public bool takenDamage = false;
+    public float damageCooldownTimer = .5f;
     public int health = 5;
     public int maxHealth = 10;
     public int HealthPickupAmt = 5;
+    
 
     [Header("Weapon Stats")]
     public Transform WeaponSlot;
@@ -60,6 +64,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
@@ -196,5 +202,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(fireRate);
         canFire = true;
+    }
+
+    public IEnumerator cooldownDamage()
+    {
+        yield return new WaitForSeconds(damageCooldownTimer);
+        takenDamage = false;
     }
 }
