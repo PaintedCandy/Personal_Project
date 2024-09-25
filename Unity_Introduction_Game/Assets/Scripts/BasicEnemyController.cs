@@ -9,6 +9,7 @@ public class BasicEnemyController : MonoBehaviour
     public NavMeshAgent agent;
     public Transform target;
 
+
     [Header("Enemy Stats")]
     public int health = 3;
     public int maxHealth = 5;
@@ -42,7 +43,8 @@ public class BasicEnemyController : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if(collision.gameObject.tag == "Player" && !player.takenDamage)
+
+        if (collision.gameObject.tag == "Player" && !player.takenDamage)
         {
                 player.takenDamage = true;
                 player.health -= damageGiven;
