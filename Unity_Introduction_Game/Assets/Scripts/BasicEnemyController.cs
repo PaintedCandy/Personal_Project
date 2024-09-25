@@ -10,9 +10,12 @@ public class BasicEnemyController : MonoBehaviour
     public Transform target;
 
 
+    public bool isPlayerDetected = false;
+    //private float distanceToPlayer;
+
     [Header("Enemy Stats")]
-    public int health = 3;
-    public int maxHealth = 5;
+    public int health = 5;
+    public int maxHealth = 10;
     public int damageGiven = 1;
     public int damageReceived = 1;
     public float pushBackForce = 5;
