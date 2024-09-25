@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody myRB;
     Camera playerCam;
+    Transform cameraHolder;
 
     Vector2 camRotation;
 
@@ -55,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         myRB = GetComponent<Rigidbody>();
         playerCam = transform.GetChild(0).GetComponent<Camera>();
+        playerCam = Camera.main;
+        cameraHolder = transform.GetChild(0);
 
         camRotation = Vector2.zero;
         Cursor.visible = false;
@@ -71,7 +74,10 @@ public class PlayerController : MonoBehaviour
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         camRotation.y = Mathf.Clamp(camRotation.y, -90, 90);
 
-        playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
+        playerCam.transform.position = cameraHolder.position;
+
+
+        playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
         if (Input.GetMouseButtonDown(0) && canFire && currentClip > 0 && weaponID >= 0)
