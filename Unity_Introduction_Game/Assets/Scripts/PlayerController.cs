@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Vector2 camRotation;
 
 
+
     [Header("Player Stats")]
     public bool takenDamage = false;
     public float damageCooldownTimer = .5f;
