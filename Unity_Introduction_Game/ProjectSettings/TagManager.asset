@@ -8,6 +8,7 @@ TagManager:
   - Weapon
   - Bullet
   - BasicEnemy
+  - distanceDetection
   layers:
   - Default
   - TransparentFX

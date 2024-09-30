@@ -10,8 +10,6 @@ public class BasicEnemyController : MonoBehaviour
     public Transform target;
 
 
-    public bool isPlayerDetected = false;
-    //private float distanceToPlayer;
 
     [Header("Enemy Stats")]
     public int health = 5;
@@ -24,7 +22,7 @@ public class BasicEnemyController : MonoBehaviour
     void Start()
     {
        player = GameObject.Find("Player").GetComponent<PlayerController>();
-       agent = GetComponent<NavMeshAgent>(); 
+       agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -34,10 +32,7 @@ public class BasicEnemyController : MonoBehaviour
 
         agent.destination = target.position;
 
-        if (health <= 0)
-            Destroy(gameObject);
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Bullet")
@@ -53,6 +48,14 @@ public class BasicEnemyController : MonoBehaviour
                 player.health -= damageGiven;
                 player.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * pushBackForce);
                 player.StartCoroutine("cooldownDamage");
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            agent.isStopped = false;
+            agent.destination = target.position;
         }
     }
 }

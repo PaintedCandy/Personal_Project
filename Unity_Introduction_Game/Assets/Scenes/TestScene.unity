@@ -281,7 +281,6 @@ MonoBehaviour:
   player: {fileID: 0}
   agent: {fileID: 0}
   target: {fileID: 0}
-  isPlayerDetected: 0
   health: 3
   maxHealth: 5
   damageGiven: 1
@@ -1210,8 +1209,8 @@ GameObject:
   - component: {fileID: 2084271566}
   - component: {fileID: 2084271565}
   m_Layer: 0
-  m_Name: detectionRadius
-  m_TagString: Untagged
+  m_Name: distanceDetection
+  m_TagString: distanceDetection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1246,8 +1245,8 @@ Transform:
   m_GameObject: {fileID: 2084271564}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.19, z: 0}
-  m_LocalScale: {x: 28.36, y: 1.36, z: 35.25}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 28.36, y: 2.11752, z: 35.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 296632796}
@@ -1415,6 +1414,10 @@ PrefabInstance:
     - target: {fileID: 6478281951387968171, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086811899470171903, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7671664150514906105, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
       propertyPath: m_Name
