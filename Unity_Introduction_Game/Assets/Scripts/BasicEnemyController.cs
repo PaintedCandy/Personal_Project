@@ -32,6 +32,9 @@ public class BasicEnemyController : MonoBehaviour
 
         agent.destination = target.position;
 
+
+        if (health <= 0)
+            Destroy(gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {

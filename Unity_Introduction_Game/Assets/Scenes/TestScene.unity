@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40856bfca3869b84eb9e103f828395c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 2337469034461955271}
   agent: {fileID: 0}
   target: {fileID: 0}
   health: 3
@@ -554,6 +554,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6478281951387968171, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
   m_PrefabInstance: {fileID: 1452483889022085737}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &296632800
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296632790}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &324324812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,15 +1027,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Paused
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3330,6 +3351,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7671664150514906105, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 296632791}
+    - targetCorrespondingSourceObject: {fileID: 7671664150514906105, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 296632800}
   m_SourcePrefab: {fileID: 100100000, guid: a93ec167325141746a657ac1a422cbb0, type: 3}
 --- !u!114 &2337469034461955271
 MonoBehaviour:

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    GameManager gm;
+    
     Rigidbody myRB;
     Camera playerCam;
     Transform cameraHolder;
@@ -55,11 +57,13 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Initialized components
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         myRB = GetComponent<Rigidbody>();
-        playerCam = transform.GetChild(0).GetComponent<Camera>();
         playerCam = Camera.main;
         cameraHolder = transform.GetChild(0);
 
+        // Camera setup
         camRotation = Vector2.zero;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -68,63 +72,71 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-        camRotation.y = Mathf.Clamp(camRotation.y, -90, 90);
-
-        playerCam.transform.position = cameraHolder.position;
-
-
-        playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
-        transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
-
-        if (Input.GetMouseButtonDown(0) && canFire && currentClip > 0 && weaponID >= 0)
+        if (!gm.isPaused)
         {
-            GameObject s = Instantiate(shot, WeaponSlot.position, WeaponSlot.rotation);
-            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotVel);
-            Destroy(s, bulletLifespan);
+            if (health <= 0)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-            canFire = false;
-            currentClip--;
-            StartCoroutine("cooldownFire");
+            // FPS Camera Rotation
+            camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+            camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+
+            // Limit vertical rotation
+            camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
+
+            playerCam.transform.position = cameraHolder.position;
+
+            // Set camera rotation on the vertical axis | Set player rotation on horizontal axis
+            playerCam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
+            transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
+
+            if (Input.GetMouseButtonDown(0) && canFire && currentClip > 0 && weaponID >= 0)
+            {
+                GameObject s = Instantiate(shot, WeaponSlot.position, WeaponSlot.rotation);
+                s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotVel);
+                Destroy(s, bulletLifespan);
+
+                canFire = false;
+                currentClip--;
+                StartCoroutine("cooldownFire");
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+                reloadClip();
+
+            // Sprint turn on for toggle & not toggle
+            if (!sprinting)
+            {
+                if (!sprinting && !sprintToggle && Input.GetKey(KeyCode.LeftShift))
+                    sprinting = true;
+
+                if (!sprinting && sprintToggle && (Input.GetAxisRaw("Vertical") > 0) && Input.GetKey(KeyCode.LeftShift))
+                    sprinting = true;
+            }
+
+            // Movement math calculation velocity measured by input * speed
+            Vector3 temp = myRB.velocity;
+
+            temp.z = Input.GetAxisRaw("Horizontal") * speed;
+            temp.x = Input.GetAxisRaw("Vertical") * speed;
+
+            // If sprinting, check to see if disable condition flags (also amplify speed if sprinting)
+            if (sprinting)
+                temp.z *= sprintMult;
+
+            if (sprinting && sprintToggle && (Input.GetAxisRaw("Vertical") <= 0))
+                sprinting = false;
+
+            if (sprinting && !sprintToggle && Input.GetKeyUp(KeyCode.LeftShift))
+                sprinting = false;
+
+            // Jump
+            if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetection))
+                temp.y = jumpHeight;
+
+
+            myRB.velocity = (transform.forward * temp.x) + (transform.right * temp.z) + (transform.up * temp.y);
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-            reloadClip();
-
-
-        if (!sprinting)
-        {
-            if (!sprinting && !sprintToggle && Input.GetKey(KeyCode.LeftShift))
-                sprinting = true;
-
-            if (!sprinting && sprintToggle && (Input.GetAxisRaw("Vertical") > 0) && Input.GetKey(KeyCode.LeftShift))
-                sprinting = true;
-        }
-
-
-        Vector3 temp = myRB.velocity;
-
-        temp.z = Input.GetAxisRaw("Horizontal") * speed;
-        temp.x = Input.GetAxisRaw("Vertical") * speed;
-
-        if (sprinting)
-            temp.z *= sprintMult;
-
-        if (sprinting && sprintToggle && (Input.GetAxisRaw("Vertical") <= 0))
-            sprinting = false;
-
-        if (sprinting && !sprintToggle && Input.GetKeyUp(KeyCode.LeftShift))
-            sprinting = false;
-
-        if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetection))
-            temp.y = jumpHeight;
-
-        myRB.velocity = (transform.forward * temp.x) + (transform.right * temp.z) + (transform.up * temp.y);
-
     }
 
     private void OnCollisionEnter(Collision collision)
