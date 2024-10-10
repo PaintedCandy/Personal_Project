@@ -60,5 +60,8 @@ public class BasicEnemyController : MonoBehaviour
             agent.isStopped = false;
             agent.destination = target.position;
         }
+
+        else
+            agent.isStopped = true;
     }
 }
