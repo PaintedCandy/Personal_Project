@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     
     Rigidbody myRB;
     Camera playerCam;
+
     Transform cameraHolder;
 
     Vector2 camRotation;
